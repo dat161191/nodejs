@@ -6,11 +6,7 @@ let router = express.Router();
 
 const initWebRoute = (app) => {
     router.get('/', homeController.getHomePage);
-
-    router.get('/about', (req, res) => {
-        res.send('Hello TranGia')
-    });
-
+    router.get('/detail/clock/:clockId', homeController.getDetailPage);
     return app.use('/', router);
 }
 
