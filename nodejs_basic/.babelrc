@@ -1,3 +1,5 @@
+//Câu lệnh trên là một tập tin cấu hình cho Babel.
+//Một công cụ để chuyển đổi mã JavaScript từ phiên bản mới sang phiên bản cũ hơn để đảm bảo sự tương thích trên các trình duyệt và môi trường thực thi khác nhau.
 {
     "presets": [
       "@babel/preset-env"

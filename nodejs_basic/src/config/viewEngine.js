@@ -1,7 +1,7 @@
 import express from "express";
 
 // configViewEngine() sẽ cấu hình cho ứng dụng Express của chúng ta sử dụng view engine EJS và load các file view từ thư mục ./src/views.
-//  Tham số truyền vào là đối tượng ứng dụng (app) của Express.
+// Tham số truyền vào là đối tượng ứng dụng (app) của Express.
 const configViewEngine = (app) => {
     //  Sử dụng middleware express.static() để phục vụ các tệp tĩnh như hình ảnh, CSS và các tệp JavaScript từ thư mục ./src/public.
     app.use(express.static('./src/public'));
