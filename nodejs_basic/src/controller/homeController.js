@@ -52,42 +52,45 @@ let getCreatePage = async (req, res) => {
 let saveMovie = async (req, res) => {
     // console.log(req.body);
     let { name_movie, poster, year_show, performer, director, content, type_movie, category, origin, time_show } = req.body;
-    await pool.execute(`insert into movie(name_movie, poster, year_show, performer, director, content,type_movie_id,category_id,origin_id,time_show) values(?,?,?,?,?,?,?,?,?,?)`,
+    await pool.execute(`insert into movie(
+        name_movie, poster, year_show, performer, director, content,type_movie_id,category_id,origin_id,time_show) values(?,?,?,?,?,?,?,?,?,?)`,
         [name_movie, poster, year_show, performer, director, content, type_movie, category, origin, time_show]);
     return res.redirect("/");
 }
 
-// let deleteClockPage = async (req, res) => {
-//     let clockId = req.params.clockId;
-//     //    console.log(clockId);
-//     const [clock] = await pool.execute(`select * from clock c where c.id = ? and c.flag=false`, [clockId]);
-//     // console.log(clock);
-//     return res.render('delete.ejs', { clock: clock[0] })
-// }
+let getDeletePage = async (req, res) => {
+    let idMovie = req.params.idMovie;
+    //    console.log(clockId);
+    const [data] = await pool.execute(`select * from movie  where id_movie = ? and flag=false`, [idMovie]);
+    console.log(data);
+    return res.render('delete.ejs', { movie: data[0] })
+}
 
-// let deleteClock = async (req, res) => {
-//     let clockId = req.body.id;
-//     await pool.execute(`UPDATE clock
-//     SET clock.flag = true
-//     WHERE clock.id=?`, [clockId]);
-//     return res.redirect('/');
-// }
-// let editClockPage = async (req, res) => {
-//     let clockId = req.params.clockId;
-//     const [clock] = await pool.execute(`select * from clock c where c.id = ? and c.flag=false`, [clockId]);
-//     let selectedMachineType = clock[0].machine_type_id;
-//     let selectedTrademark = clock[0].trademark_id;
-//     return res.render('edit.ejs', { clock: clock[0], selectedMachineType, selectedTrademark })
-// }
-// let updateClock = async (req, res) => {
-//     let { name, price, quanlity, country_registration, machine_type_id, trademark_id, id } = req.body;
-//     console.log(req.body);
-//     await pool.execute(`UPDATE clock
-//     SET clock.name = ?,clock.price=?,clock.quanlity=?,clock.country_registration=?,clock.machine_type_id=?,clock.trademark_id=?
-//     WHERE clock.id=?`, [name, price, quanlity, country_registration, machine_type_id, trademark_id, id])
-//     return res.redirect("/");
-// }
+let deleteMovie = async (req, res) => {
+    let idMovie = req.body.id_movie;
+    await pool.execute(`UPDATE movie
+    SET flag = true
+    WHERE id_movie=?`, [idMovie]);
+    return res.redirect('/');
+}
+let getEditPage = async (req, res) => {
+    let idMovie = req.params.idMovie;
+    const [movie] = await pool.execute(`select * from movie  where id_movie = ? and flag=false`, [idMovie]);
+    const [type_movie] = await pool.execute(`SELECT * FROM type_movie`);
+    const [category] = await pool.execute(`SELECT * FROM category`);
+    const [origin] = await pool.execute(`SELECT * FROM origin`);
+    console.log('check data =>', movie);
+    return res.render('edit.ejs', { movie: movie[0], type_movie: type_movie, category: category, origin: origin })
+}
+let updateMovie = async (req, res) => {
+    let { name_movie, poster, year_show, performer, director, content, type_movie, category, origin, time_show, id_movie } = req.body;
+    console.log(req.body);
+    await pool.execute(`UPDATE movie
+    SET name_movie = ?,poster=?,year_show=?,performer=?,director=?,content=?,type_movie_id=?,category_id=?,origin_id=?,time_show=?
+    WHERE id_movie=? AND flag=false`, [name_movie, poster, year_show, performer, director, content, type_movie, category, origin, time_show, id_movie])
+    return res.redirect("/");
+}
 
 module.exports = {
-    getHomePage, getDetailPage, getCreatePage, saveMovie
+    getHomePage, getDetailPage, getCreatePage, saveMovie, getEditPage, updateMovie, getDeletePage, deleteMovie
 }

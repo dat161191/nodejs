@@ -12,12 +12,10 @@ const initWebRoute = (app) => {
     // // });
     router.get('/create',homeController.getCreatePage);
     router.post('/save-movie',homeController.saveMovie);
-    // router.get('/edit/clock/:clockId',homeController.editClockPage);
-    // router.post('/update-clock',homeController.updateClock);
-    // router.get('/delete/clock/:clockId',homeController.deleteClockPage);
-    // router.post('/delete-clock',homeController.deleteClock);
-    // router.get('/edit/clock/:clockId',homeController.editClockPage);
-    // router.post('/update-clock',homeController.updateClock);
+    router.get('/edit/movie/:idMovie',homeController.getEditPage);
+    router.post('/update-movie',homeController.updateMovie);
+    router.get('/delete/movie/:idMovie',homeController.getDeletePage);
+    router.post('/delete-movie',homeController.deleteMovie);
     return app.use('/', router);
 }
 
